@@ -21,7 +21,8 @@ class DemoApp extends StatefulWidget {
 }
 
 class _DemoAppState extends State<DemoApp> {
-  static String key = "AIzaSyC-Aczhvq9BchrA3Y5gN27QuTUpi-H_Eik";
+  int c =0;
+  static String key = "AIzaSyCRM4kALMGi9ogN7BkMYytzI8W98s-6_Bo";
   String query = "App Development";
   YoutubeAPI ytApi = YoutubeAPI(key);
   List<YT_API> ytResult = [];
@@ -79,9 +80,17 @@ class _DemoAppState extends State<DemoApp> {
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 15),
                 hintText: "Search ..."),
             onChanged: (text) {
+              c++;
               text = text.toLowerCase();
               setState(() {
-                callAPI(text);
+                if(c==4) {
+                  c=0;
+                  callAPI(text);
+                }
+                if(text.isEmpty){
+                  print('Enter Keyword');
+                  callAPI(query);
+                }
               });
             },
           ),
