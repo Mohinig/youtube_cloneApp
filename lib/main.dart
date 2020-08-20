@@ -24,6 +24,7 @@ class _DemoAppState extends State<DemoApp> {
   int c =0;
   static String key = "AIzaSyCRM4kALMGi9ogN7BkMYytzI8W98s-6_Bo";
   String query = "App Development";
+  TextEditingController _controller = TextEditingController();
   YoutubeAPI ytApi = YoutubeAPI(key);
   List<YT_API> ytResult = [];
 
@@ -71,6 +72,7 @@ class _DemoAppState extends State<DemoApp> {
         child: Material(
           borderRadius: BorderRadius.circular(20),
           child: TextField(
+            controller: _controller,
             decoration: InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: Icon(
@@ -93,6 +95,12 @@ class _DemoAppState extends State<DemoApp> {
                 }
               });
             },
+            onSubmitted: (text){
+              callAPI(text);
+            },
+            //onTap: (){
+            //  callAPI(_controller.toString());
+            //},
           ),
         ));
   }
