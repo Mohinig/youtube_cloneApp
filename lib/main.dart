@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_api/youtube_api.dart';
+import 'package:youtubesearch_app/read.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +22,7 @@ class DemoApp extends StatefulWidget {
 }
 
 class _DemoAppState extends State<DemoApp> {
-  int c =0;
+  int c = 0;
   static String key = "AIzaSyCRM4kALMGi9ogN7BkMYytzI8W98s-6_Bo";
   String query = "App Development";
   TextEditingController _controller = TextEditingController();
@@ -85,59 +86,61 @@ class _DemoAppState extends State<DemoApp> {
               c++;
               text = text.toLowerCase();
               setState(() {
-                if(c==4) {
-                  c=0;
+                if (c == 4) {
+                  c = 0;
                   callAPI(text);
                 }
-                if(text.isEmpty){
+                if (text.isEmpty) {
                   print('Enter Keyword');
                   callAPI(query);
                 }
               });
             },
-            onSubmitted: (text){
+            onSubmitted: (text) {
               callAPI(text);
             },
-            //onTap: (){
-            //  callAPI(_controller.toString());
-            //},
           ),
         ));
   }
 
   _listItem(index) {
-    return Card(
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 7.0),
-        padding: EdgeInsets.all(12.0),
-        child: Row(
-          children: <Widget>[
-            Image.network(
-              ytResult[index].thumbnail['default']['url'],
-            ),
-            Padding(padding: EdgeInsets.only(right: 20.0)),
-            Expanded(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                  Text(
-                    ytResult[index].title,
-                    softWrap: true,
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 1.5)),
-                  Text(
-                    ytResult[index].channelTitle,
-                    softWrap: true,
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 3.0)),
-                  Text(
-                    ytResult[index].url,
-                    softWrap: true,
-                  ),
-                ]))
-          ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ReadPage(
+                      posturl: ytResult[index].url,
+                    )));
+      },
+      child: Card(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 7.0),
+          padding: EdgeInsets.all(12.0),
+          child: Row(
+            children: <Widget>[
+              Image.network(
+                ytResult[index].thumbnail['default']['url'],
+              ),
+              Padding(padding: EdgeInsets.only(right: 20.0)),
+              Expanded(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                    Text(
+                      ytResult[index].title,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                    Padding(padding: EdgeInsets.only(bottom: 1.5)),
+                    Text(
+                      ytResult[index].channelTitle,
+                      softWrap: true,
+                    ),
+                  ]))
+            ],
+          ),
         ),
       ),
     );
